@@ -90,7 +90,7 @@ def tela_registro():
             window.close()
             tela2()
             return
-        if event == 'Primeiro registro':
+        if event == 'Registrar':
             usuario = values['usuario']
             email = values['email']
             cpf = values['cpf']
