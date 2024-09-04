@@ -111,6 +111,7 @@ def tela_registro():
                 tela2()
                 return
 #teste1
+#teste 2
     window.close()
 
 tela2()
