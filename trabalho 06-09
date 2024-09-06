@@ -1,9 +1,8 @@
 import PySimpleGUI as sg
-
+import os 
+usuarios_db = []
 
 def principal():
-
-
     armazenamento = []
     erro = ''
     texto = ''
@@ -19,16 +18,13 @@ def principal():
         [sg.Button('Enviar'), sg.Button('ADC.Aluno'), sg.Button('Cancel')]
     ]
 
-    window = sg.Window('Hello Example', layout)
+    window = sg.Window('Sistema Escolar', layout)
 
     while True:
         event, values = window.read()
         
-
-        
         if event == sg.WIN_CLOSED or event == 'Cancel':
             break
-
 
         if event == 'Enviar':
             if armazenamento:
@@ -40,21 +36,16 @@ def principal():
                 sg.popup("RESULTADO", "Nenhum dado para exibir.")
             window['erro'].update('')
 
-        
         if event == "ADC.Aluno":
-            # variaveis do input 
             nome = values['nome']
             numero = values['numero']
             numero2 = values['numero2']
         
-        # Validacoes 
-
             if nome.isdigit():
                 window["erro"].update("ERRO\nDigite um texto válido")
                 erro = 'EXISTE UM ERRO'
-            elif values["nome"] =="" or values["numero"] ==""  or values ["numero2"] =="" :
-                window ["erro"].update("ERRO \n os campos estao vazios")
-
+            elif values["nome"] == "" or values["numero"] == "" or values["numero2"] == "":
+                window["erro"].update("ERRO\nOs campos estão vazios")
             elif len(nome) < 3:
                 window["erro"].update("ERRO\nSeu nome tem que ter no mínimo 3 letras")
                 erro = 'EXISTE UM ERRO'
@@ -89,7 +80,6 @@ def principal():
                         sg.popup(f"Aluno inserido com sucesso")
                         
                         armazenamento.append({'nome': nome, 'nota1': nota1, 'nota2': nota2, 'media': media, 'situacao': situação })
-                        print (armazenamento)
                         window['nome'].update('')
                         window['numero'].update('')
                         window['numero2'].update('')
@@ -101,9 +91,6 @@ def principal():
 
     window.close()
 
-usuarios_db = {}
-import PySimpleGUI as sg
-import re
 
 def tela2():
     layout = [
@@ -116,7 +103,7 @@ def tela2():
         [sg.Text("Senha")],
         [sg.InputText(key='senha', password_char='*')],
         [sg.Text('', key='erro_login')],
-        [sg.Button('Login'), sg.Button('Registrar'), sg.Button('Cancelar')]
+        [sg.Button('Login'), sg.Button('Primeiro registro'), sg.Button('Cancelar')]
     ]
     window = sg.Window('Login', layout)
 
@@ -125,51 +112,65 @@ def tela2():
 
         if event == sg.WIN_CLOSED or event == 'Cancelar':
             break
-        if event == 'Registrar':
+        if event == 'Primeiro registro':
             window.close()
             tela_registro()
-            return
+            
         if event == 'Login':
             nome = values['nome']
             email = values['email']
             senha = values['senha']
+
             
-            # Verificar se o email está no banco de dados e a senha está correta
-            if email in usuarios_db and usuarios_db[email]['senha'] == senha:
-                sg.popup('Login bem-sucedido!')
+            if nome == '' and email == '' and senha == '':
+                sg.popup(' Usuario não cadastrado ')
+
+            elif len(nome) < 3:
+                window["erro_login"].update("ERRO\nSeu nome tem que ter no mínimo 3 letras")
+
+            elif len(senha) < 8:
+                window["erro_login"].update("ERRO\n sua senha tem que ter no minimo 8 caracteres")
+
+            if os.path.exists('dados_armazenamento.txt'):
+                with open('dados_armazenamento.txt', 'r') as file:
+                    for i in file:
+                        login,password = i.strip().split(',')
+                        if login == nome and password == senha:
+
+                            sg.popup('Login bem-sucedido!')
+                            window.close()
+                            principal()
+
+       
             else:
-                window['erro_login'].update('Email ou senha inválidos')
+                window['erro_login'].update('Não existe usuarios cadastrados')
 
     window.close()
 
-# Função para validar os campos de entrada
+
 def validar_campos(nome, email, cpf, senha, confirma_senha):
-    # Verificar se todos os campos são preenchidos
     if not nome or not email or not cpf or not senha or not confirma_senha:
         return 'Todos os campos são obrigatórios'
     
-    # Validar nome
-    if not re.match(r'^[A-Za-z\s]+$', nome):
-        return 'Nome inválido'
+    if len(nome) < 3:
+        return 'Nome muito curto'
     
-    # Validar email
-    regex_email = r'^\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
-    if not re.match(regex_email, email):
+    if '@' not in email:
         return 'Email inválido'
     
-    # Validar CPF
     if not (cpf.isdigit() and len(cpf) == 11):
         return 'CPF inválido'
     
-    # Validar senhas
     if senha != confirma_senha:
         return 'As senhas não coincidem'
     
+    with open('dados_armazenamento.txt', 'a') as arquivo:
+        arquivo.write(f"{nome},{senha}\n")
     return None
 
 
-#tela registro
 def tela_registro():
+    global usuarios_db
     layout = [
         [sg.Text("Tela de Registro")],
         [sg.Text("Nome de usuário")],
@@ -193,7 +194,8 @@ def tela_registro():
         if event == sg.WIN_CLOSED or event == 'Voltar':
             window.close()
             tela2()
-            return
+    
+        
         if event == 'Registrar':
             usuario = values['usuario']
             email = values['email']
@@ -201,20 +203,16 @@ def tela_registro():
             senha = values['senha']
             confirma_senha = values['confirma_senha']
             
-            # Validar campos
             erro = validar_campos(usuario, email, cpf, senha, confirma_senha)
-            
-            if erro:
-                window['erro_registro'].update(erro)
-            elif email in usuarios_db:
-                window['erro_registro'].update('Email já cadastrado')
-            else:
-                usuarios_db[email] = {'usuario': usuario, 'cpf': cpf, 'senha': senha}
-                sg.popup('Registro bem-sucedido!')
-                window.close()
-                tela2()
-                return
 
-    window.close()
+            print('aa')
+            usuarios_db.append({'usuario': usuario, 'cpf': cpf, 'senha': senha})
+            sg.popup('Registro bem-sucedido!')
+            window.close()
+            tela2()
+            
+
+        window.close()
+
 
 tela2()
