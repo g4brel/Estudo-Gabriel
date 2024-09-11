@@ -1,4 +1,5 @@
-# Estudo-Gabriel
+Estudo-Gabriel
+
 **Documentação do Sistema Escolar**
 
 **Descrição do Projeto**
@@ -40,30 +41,12 @@ Tela Principal
 O usuário pode adicionar alunos com nome e duas notas.
 Calcula a média das notas e determina a situação (aprovado/reprovado) com base na média.
 Exibe os dados dos alunos e permite a visualização de todos os alunos cadastrados.
-Bibliotecas e Documentação
-PySimpleGUI: Documentação
-Os: Documentação
-Este documento fornece uma visão geral detalhada sobre as funcionalidades e o funcionamento do sistema, incluindo as tecnologias e bibliotecas utilizadas.
+Bibliotecas , Documentação e Programas 
+PySimpleGUI: https://www.pysimplegui.com/  Documentação
+Visualstudio:https://code.visualstudio.com/
+
+![Captura de tela 2024-09-11 110220](https://github.com/user-attachments/assets/6fe2390b-09f9-47fe-a16d-f3880045cffb)
 
 
-O Sistema Escolar é uma aplicação gráfica desenvolvida em Python para gerenciar informações de alunos e professores em uma escola fictícia. Utilizando a biblioteca PySimpleGUI, a aplicação oferece uma interface intuitiva para login, registro e gerenciamento de dados de alunos.
 
-**Funcionalidades**
-Tela de Login
-
-Autentica professores com nome, e-mail e senha.
-Valida as credenciais contra um arquivo de texto (dados_armazenamento.txt).
-Tela de Registro
-
-Permite o registro de novos usuários (professores).
-Valida informações como nome, e-mail, CPF e senha antes de armazenar os dados em dados_armazenamento.txt.
-Tela Principal
-
-Gerencia informações dos alunos, incluindo nome e notas.
-Calcula a média das notas e determina a situação do aluno (aprovado/reprovado).
-Exibe os dados dos alunos em uma janela pop-up.
-Tecnologias Utilizadas
-Python: Linguagem de programação principal.
-PySimpleGUI: Biblioteca para criar interfaces gráficas. Documentação
-Os: Biblioteca padrão do Python para manipulação de arquivos. Documentação
 
