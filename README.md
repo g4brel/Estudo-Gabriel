@@ -1,6 +1,6 @@
-Estudo-Gabriel
 
-**Documentação do Sistema Escolar**
+
+# Documentação do Sistema Escolar
 
 **Descrição do Projeto**
 O sistema escolar desenvolvido é uma aplicação gráfica que permite o gerenciamento de informações de alunos e professores em uma escola fictícia. Utiliza a biblioteca PySimpleGUI para criar interfaces gráficas intuitivas e interativas. A aplicação possui três funcionalidades principais: a tela de login para professores, a tela de registro para novos usuários e a tela principal para o gerenciamento dos dados dos alunos.
@@ -44,6 +44,8 @@ Exibe os dados dos alunos e permite a visualização de todos os alunos cadastra
 Bibliotecas , Documentação e Programas 
 PySimpleGUI: https://www.pysimplegui.com/  Documentação
 Visualstudio:https://code.visualstudio.com/
+
+___
 
 ![Captura de tela 2024-09-11 110220](https://github.com/user-attachments/assets/6fe2390b-09f9-47fe-a16d-f3880045cffb)
 
