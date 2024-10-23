@@ -1,0 +1,75 @@
+import PySimpleGUI as sg
+
+jogo_da_velha = "x"
+
+layout = [  ]
+teste = 0
+
+
+Matriz_invisível = [
+    [None, None, None],
+    [None, None, None],
+    [None, None, None]
+]
+
+def verificar_vencedor():
+    global Matriz_invisível
+
+    #Vitória por linha
+    for d in range(3):
+        if Matriz_invisível[d][None] == 'X' and Matriz_invisível[d][None] == 'X' and Matriz_invisível[d][None] == 'X' or Matriz_invisível[d][None] == 'o' and Matriz_invisível[d][None] == 'o' and Matriz_invisível[d][None] == 'o':
+
+
+    #Vitória por coluna
+
+            if Matriz_invisível[None][c] == 'X' and Matriz_invisível[None][c] == 'X' and Matriz_invisível[None][c] == 'X' or Matriz_invisível[None][c] == 'o' and Matriz_invisível[None][c] == 'o' and Matriz_invisível[None][c] == 'o':
+
+    #Vitória pela diagonal principal
+    
+
+    #Vitória pela diagonal oposta
+
+
+
+
+for a in range (3):
+    linha = []
+    for b in range (3):
+        linha.append(sg.Button('', size=(6, 3), key= teste ))
+        teste +=1 
+
+
+    layout.append(linha) 
+
+# Create the Window
+window = sg.Window('Hello Example', layout)
+
+# Event Loop to process "events" and get the "values" of the inputs
+while True:
+    event, values = window.read()
+
+    # if user closes window or clicks cancel
+    if event == sg.WIN_CLOSED or event == 'Cancel':
+        break
+    
+    
+    for i in range (9): 
+        if event == i:
+                        # Verifica se a posição já está ocupada
+            print(event)
+            if Matriz_invisível[i // 3][i % 3] is None:  # Se a posição estiver livre
+                # Atualiza o botão clicado
+                window[i].update(jogo_da_velha)
+                # Atualiza a matriz invisível
+                Matriz_invisível[i // 3][i % 3] = jogo_da_velha
+                        
+                if jogo_da_velha == 'x':
+                    jogo_da_velha = 'O' 
+
+                else: 
+                    jogo_da_velha = 'x'
+                print(Matriz_invisível)
+                    
+
+
+window.close()

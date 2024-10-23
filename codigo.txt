@@ -1,0 +1,56 @@
+import PySimpleGUI as sg
+
+jogo_da_velha = "x"
+
+layout = [  ]
+teste = 0
+
+
+Matriz_invisível = [
+    [0,1,2],
+    [3,4,5],
+    [6,7,8]
+]
+
+
+
+for a in range (3):
+    linha = []
+    for b in range (3):
+        linha.append(sg.Button('', size=(6, 3), key= teste ))
+        teste +=1 
+
+
+    layout.append(linha) 
+
+# Create the Window
+window = sg.Window('Hello Example', layout)
+
+# Event Loop to process "events" and get the "values" of the inputs
+while True:
+    event, values = window.read()
+
+    # if user closes window or clicks cancel
+    if event == sg.WIN_CLOSED or event == 'Cancel':
+        break
+    
+    
+    for i in range (9): 
+        if event == i:
+            window[i].update(jogo_da_velha)
+            for i in range (3):
+                for b in range (3):
+                    if Matriz_invisível[i][b] == event:
+                        Matriz_invisível[i][b] = jogo_da_velha
+                        
+                        
+                        
+    if jogo_da_velha == 'x':
+        jogo_da_velha = 'O' 
+
+    else: 
+        jogo_da_velha = 'x'
+
+    print(Matriz_invisível)
+
+window.close()

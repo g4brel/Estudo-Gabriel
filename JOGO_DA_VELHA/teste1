@@ -1,0 +1,80 @@
+import PySimpleGUI as sg
+
+jogo_da_velha = "X"  # Começa com X
+layout = []
+teste = 0
+
+Matriz_invisível = [
+    [None, None, None],
+    [None, None, None],
+    [None, None, None]
+]
+
+def verificar_vencedor():
+    global Matriz_invisível
+
+    # Verificar linhas e colunas
+    for i in range(3):
+        if Matriz_invisível[i][0] == Matriz_invisível[i][1] == Matriz_invisível[i][2] and Matriz_invisível[i][0] is not None:
+            return Matriz_invisível[i][0]
+        
+        if Matriz_invisível[0][i] == Matriz_invisível[1][i] == Matriz_invisível[2][i] and Matriz_invisível[0][i] is not None:
+            return Matriz_invisível[0][i]
+    
+
+    # Verificar diagonais
+    if Matriz_invisível[0][0] == Matriz_invisível[1][1] == Matriz_invisível[2][2] and Matriz_invisível[0][0] is not None:
+        return Matriz_invisível[0][0]
+    if Matriz_invisível[0][2] == Matriz_invisível[1][1] == Matriz_invisível[2][0] and Matriz_invisível[0][2] is not None:
+        return Matriz_invisível[0][2] 
+    
+    return None  # Nenhum vencedor ainda
+
+def verificar_empate():
+    return all(cell is not None for row in Matriz_invisível for cell in row)
+
+# Criar botões
+for a in range(3):
+    linha = []
+    for b in range(3):
+        linha.append(sg.Button('', size=(6, 3), key=teste))
+        teste += 1
+    layout.append(linha)
+
+# Criar a Janela
+window = sg.Window('Jogo da Velha', layout)
+
+# Loop de eventos
+while True:
+    event, values = window.read()
+
+    # Se o usuário fechar a janela
+    if event == sg.WIN_CLOSED:
+        break
+
+    # Verifica se o botão clicado é um dos botões do jogo
+    if isinstance(event, int):  # Se o evento for um inteiro (um botão do jogo)
+        # Verifica se a posição já está ocupada
+        if Matriz_invisível[event // 3][event % 3] is None:
+            # Atualiza o botão clicado
+            window[event].update(jogo_da_velha)
+            # Atualiza a matriz invisível
+            Matriz_invisível[event // 3][event % 3] = jogo_da_velha
+
+            # Verifica se há um vencedor
+            vencedor = verificar_vencedor()
+            if vencedor:
+
+                sg.popup(f'Jogador {vencedor} venceu!')
+                break
+            
+            # Sai do loop após um vencedor
+
+            if verificar_empate():
+                sg.popup('Empate!')
+                break  # Sai do loop após um empate
+
+            # Troca o jogador
+            jogo_da_velha = 'O' if jogo_da_velha == 'X' else 'X'
+
+window.close()

@@ -129,7 +129,7 @@ def tela2():
                 window["erro_login"].update("ERRO\nSeu nome tem que ter no mínimo 3 letras")
 
             elif len(senha) < 8:
-                window["erro_login"].update("ERRO\n sua senha tem que ter no minimo 8 caracteres")
+                window["erro_login"].update("ERRO\n por sua segurança coloque uma senha de no minimo 8 caracteres")
 
             if os.path.exists('dados_armazenamento.txt'):
                 with open('dados_armazenamento.txt', 'r') as file:

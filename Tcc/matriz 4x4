@@ -1,0 +1,10 @@
+import random
+
+matriz = []
+
+for i in range (4):
+    linha = []
+    for b in range (4):
+        valor = input ("digite um valor")
+        linha.append(valor)
+    matriz.append(linha)
